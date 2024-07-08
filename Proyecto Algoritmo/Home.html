@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprende con Jorley</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+@font-face {
+font-family: 'Sans Regular';
+src: url('Sans\ Regular.ttf') format('truetype');
+}
+@font-face {
+font-family: 'Sans Bold';
+src: url('Sans\ Bold.ttf') format('truetype');
+}
+@font-face {
+font-family: 'Dinofans';
+src: url('Dinofans.ttf') format('truetype');
+}
+.sidebar {
+width: 200px;
+height: 100vh;
+background-color: #333;
+padding: 20px;
+box-shadow: 0 0 2px #555555;
+position: fixed;
+top: 0;
+left: 0;
+}
+.sidebar a {
+display: block;
+color: #fff;
+text-decoration: none;
+margin-bottom: 20px;
+font-size: 18px;
+padding: 25px;
+cursor: pointer;
+border-radius: 5px;
+}
+.sidebar a:hover {
+background-color: #808080;
+}
+.sidebar a.active {
+background-color: #cdf7f7; 
+border: 2px solid #5CACEE;
+color: #5CACEE;
+}
+.sidebar a img {
+width: 40px;
+margin-right: 10px;
+text-align: center;
+margin-bottom: -13px;
+}
+.sidebar a .text {
+text-align: center;
+}
+.container {
+display: flex;
+justify-content: space-between;
+height: 100vh;
+}
+body {
+user-select: none;
+font-family: 'Sans Regular', sans-serif;
+overflow-y: scroll;
+background-color: #333;
+color: white;
+text-align: center;
+padding: 0;
+margin: 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+height: 100vh;
+transition: background-color 0.3s ease, color 0.3s ease;
+}
+.title {
+font-size: 25px;
+font-family: 'Dinofans', sans-serif;
+color: #bfff00;
+margin: 35px 0;
+}
+h1 {
+font-family: 'Sans Bold', sans-serif;
+margin-top: -20px;
+margin-bottom: 0px;
+transition: margin-top 0.3s ease;
+}
+.game-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+font-family: 'Sans Regular', sans-serif;
+margin-top: 80px;
+}
+.figure-container {
+display: flex;
+justify-content: space-between;
+transition: opacity 1s ease, visibility 1s ease;
+margin-bottom: 60px;
+}
+.figure {
+width: 400px;
+height: 390px;
+position: relative;
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-right: 50px;
+margin-left: 50px;
+cursor: pointer;
+}
+.figure img {
+pointer-events: none;
+width: 150px;
+height: auto;
+margin: 60px;
+bottom: 10px;
+transition: transform 0.2s ease;
+position: relative;
+}
+.figure p.text {
+margin-top: -30px;
+}
+.figure::before {
+box-shadow: 0px 4px 8px #555555;
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+border-radius: 10px;
+border: 2px solid #808080;
+pointer-events: none;
+box-sizing: border-box;
+}
+.figure.selected::before {
+box-shadow: 0px 4px 8px #5CACEE;
+border-color: #87CEEB;
+}
+.text {
+font-family: 'Sans Regular', sans-serif;
+}
+.separator {
+width: calc(25% + 300px);
+border-top: 2px solid #808080;
+margin-top: -10px;
+margin-bottom: 25px;
+transition: margin-top 0.3s ease;
+}
+.continue-button {
+font-family: 'Sans Regular', sans-serif;
+box-shadow: 0px 4px 8px #555555;
+background-color: #BFBFBFBF;
+color: #555555;
+padding: 15px 30px;
+border-radius: 25px;
+cursor: pointer;
+margin-top: 20px;
+font-size: 18px;
+transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+position: absolute;
+bottom: 30px;
+right: 30px;
+opacity: 0.5;
+visibility: visible;
+}
+.continue-button.enabled {
+cursor: pointer;
+background-color: #00FF00;
+color: white;
+border: 2px solid #00FF00;
+box-shadow: 0px 4px 10px #008000;
+opacity: 1;
+}
+.continue-button:hover {
+background-color: #BFBFBFBF;
+transform: scale(1.05);
+}
+.continue-button:active {
+transform: scale(0.90);
+transition: transform 0.3s ease, background-color 0s; 
+}
+.continue-button.enabled:hover {
+background-color: #4ef54e;
+}
+.figure:hover {
+background-color: #80808080;
+border-radius: 10px;
+}
+.figure.selected {
+background-color: #87CEEB80;
+border-radius: 10px;
+}
+.figure.selected img {
+transform: scale(0.9);
+}
+body.show-complete .separator,
+body.show-complete .figure-container,
+body.show-complete h1 {
+opacity: 0;
+visibility: hidden;
+transition: opacity 1s ease, visibility 1s ease;
+}
+body.show-complete .continue-button {
+display: block;
+}
+.continue-button.pressed {
+background-color: #00FF00;
+transform: scale(0.80);
+}
+</style>
+<div class="sidebar">
+<h1 class="title">Aprende con Jorley</h1>
+<a href="" id="link-home">
+<img src="House.png">
+<span class="text">INICIO</span>
+</a>
+<a href="" id="link-adults">
+<img src="Dots.png">
+<span class="text">MÁS</span>
+</a>
+</div>
+<div id="content-section">
+</div>
+<div id="additional-content">
+</div>
+<script>
+var currentUrl = window.location.href;
+var links = document.querySelectorAll('.sidebar a');
+links.forEach(function(link) {
+if (currentUrl.includes(link.href)) {
+link.classList.add('active');
+}
+});
+links.forEach(function(link) {
+link.addEventListener('click', function(event) {
+event.preventDefault();
+links.forEach(function(l) {
+l.classList.remove('active');
+});
+this.classList.add('active');
+});
+});
+document.getElementById('link-home').addEventListener('click', function(event) {
+event.preventDefault();
+document.getElementById('content-section').innerHTML = `
+</head>
+<body>
+<h1><b><font size="15">Elige tu modalidad favorita</b></font></h1>
+<div class="game-container">
+<div class="figure-container">
+<div class="figure page1" onclick="toggleSelection(this)">
+<img src="Maths.png">
+<p class="text"><font size="9"><b>MATEMÁTICAS</font></b><br><br>AUMENTA TU DOMINIO INTELECTUAL<br>RESOLVIENDO SUMAS<br>SENCILLAS.</p>
+</div>
+<div class="figure page2" onclick="toggleSelection(this)">
+<img src="English.png">
+<p class="text"><font size="9"><b>INGLÉS</font></b><br><br>ADIVINA Y APRENDE PALABRAS<br>DE OTRO IDIOMA.</p>
+</div>
+</div>
+<div class="separator"></div>
+<button class="continue-button" onclick="completeSelection()" disabled>CONTINUAR</button>
+</div>
+`;
+document.getElementById('additional-content').innerHTML = '';
+});
+document.getElementById('link-adults').addEventListener('click', function(event) {
+event.preventDefault();
+document.getElementById('additional-content').innerHTML = `
+<h1>Próximamente...</h1>
+</br>
+</br>
+</br>
+</br>
+<footer>Creado por: Andrés Granda, Jorley Acurio, Jordy Plaza, Piero Rodríguez, Marcos Chulde</footer>
+`;
+document.getElementById('content-section').innerHTML = '';
+});
+window.addEventListener('load', function() {
+document.getElementById('link-home').click();
+});
+var isSelectionCompleted = false;
+function toggleSelection(element) {
+var continuarButton = document.querySelector('.continue-button');
+if (!isSelectionCompleted && !element.classList.contains('selected')) {
+document.querySelectorAll('.figure').forEach(function (figura) {
+figura.classList.remove('selected');
+});
+element.classList.add('selected');
+continuarButton.classList.add('enabled');
+continuarButton.removeAttribute('disabled');
+}
+continuarButton.style.display = (document.querySelector('.figure.selected')) ? 'block' : 'none';
+}
+function completeSelection() {
+var continuarButton = document.querySelector('.continue-button');
+continuarButton.classList.add('pressed');
+var selectedFigure = document.querySelector('.figure.selected');
+if (selectedFigure && !isSelectionCompleted) {
+isSelectionCompleted = true;
+setTimeout(function () {
+var pageToRedirect = selectedFigure.classList.contains('page1') ? 'Children.html' : 'Adults.html';
+window.location.href = pageToRedirect;
+}, 1000);
+}
+}
+</script>
+</body>
+</html>

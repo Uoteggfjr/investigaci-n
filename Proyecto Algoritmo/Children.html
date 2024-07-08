@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matemáticas</title>
+<style>
+body {
+user-select: none;
+font-family: 'Sans Regular', sans-serif;
+margin: 0;
+padding: 0;
+background-color: #333;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+overflow-y: scroll;
+}
+header {
+color: black;
+text-align: center;
+padding: 1em;
+width: 300px;
+position: absolute;
+top: 25px;
+}
+#game-container {
+color: white;
+text-align: center;
+padding: 20px;
+border-radius: 0 0 10px 10px;
+margin-top: 170px;
+}
+#question-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: #333;
+padding: 15px;
+border-radius: 10px;
+margin-bottom: 20px;
+margin-left: 0px;
+}
+.separator-line {
+width: 400px;
+height: 1px;
+background-color: #808080;
+margin-top: 60px;
+margin-bottom: 50px;
+}
+#life-bar {
+margin-bottom: 180px;
+display: flex;
+flex-direction: row;
+}
+#life-title-container {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+#life-title {
+margin-right: 40px;
+font-size: 75px;
+margin-bottom: 70px;
+color: #00ff00;
+}
+.life-unit {
+width: 20px;
+height: 20px;
+display: inline-block;
+position: relative;
+margin-right: 5px;
+}
+.life-unit svg {
+width: 100%;
+height: 100%;
+fill: red;
+}
+#options-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+margin-top: -20px;
+}
+#question-image {
+max-width: 190px;
+margin-bottom: 10px;
+margin-right: 650px;
+pointer-events: none;
+}
+#question {
+background-color: #333;
+border: 2px solid #808080;
+padding: 20px;
+border-radius: 10px;
+display: inline-block;
+position: relative;
+font-size: 17px;
+margin-right: 430px;
+margin-left: -630px;
+}
+.question-content {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.option {
+flex: 0 0 calc(20% - 20px);
+padding: 10px;
+margin: 10px;
+cursor: pointer;
+background-color: #333;
+border: 2px solid #808080;
+box-shadow: 0px 4px 8px #3f3f3f;
+border-radius: 20px;
+transition: background-color 0.3s, color 0.3s;
+font-size: 18px;
+}
+#result-box {
+display: none;
+width: 140px;
+height: 160px;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+padding: 20px;
+background-color: #bbe07afe;
+border: 2px solid #bbe07afe;
+z-index: 1000;
+text-align: center;
+opacity: 1;
+}
+#life-bar-container {
+margin-top: -60px;
+margin-bottom: 80px;
+width: 100%;
+background-color: #808080;
+border-radius: 5px;
+overflow: hidden;
+}
+#life-bar-fill {
+height: 30px;
+width: 100%;
+background-color: #00ff00;
+transition: width 0.3s ease-in-out;
+}
+#text-above-image {
+position: absolute;
+top: 210px;
+right: 43%;
+transform: translateX(-50%);
+font-size: 30px;
+color: white;
+}
+#restart-button-popup:hover {
+transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+<header>
+<div id="life-title-container">
+<div id="life-title"><b>VIDAS</b></div>
+<div id="life-bar"></div>
+</div>
+</header>
+<div id="game-container">
+<div id="question-container">
+<div id="text-above-image"><b>Realiza esta operación</b></div>
+<div id="life-bar-container">
+<div id="life-bar-fill"></div>
+</div>
+<div class="question-content">
+<img src="Children Question.png" alt="Descripción de la imagen" id="question-image">
+<p id="question"></p>
+</div>
+<div class="separator-line"></div>
+<div id="options-container"></div>
+<button id="restart-button" style="display: none; width: 140px; color: white; height: 60px; font-size: 16px; border: 2px solid #00FF7F; background-color: #00FF7F; box-shadow: 0px 4px 8px #1A5D00; border-radius: 25px;" onclick="resetGame()">Jugar otra vez</button>
+<div id="happy-face"></div>
+<div id="message"></div>
+</div>
+<div id="result-box">
+<p id="result-message"></p>
+<button id="restart-button-popup" style="display: none; width: 140px; color: white; height: 60px; font-size: 16px; border: 2px solid #00FF7F; background-color: #00FF7F; box-shadow: 0px 4px 8px #1A5D00; border-radius: 25px;" onclick="resetGame()">Jugar otra vez</button>
+</div>
+
+<script>
+var life = 5;
+var maxLife = 5;
+var currentQuestion;
+function generateQuestion() {
+var num1 = Math.floor(Math.random() * 10) + 1;
+var num2 = Math.floor(Math.random() * 10) + 1;
+var answer = num1 + num2;
+var options = [{
+value: answer,
+isCorrect: true
+}];
+for (var i = 0; i < 5; i++) {
+options.push({
+value: generateWrongAnswer(answer),
+isCorrect: false
+});
+}
+options = shuffleArray(options);
+return {
+question: "¿Cuánto es " + num1 + " + " + num2 + "?",
+options: options
+};
+}
+function shuffleArray(array) {
+for (var i = array.length - 1; i > 0; i--) {
+var j = Math.floor(Math.random() * (i + 1));
+var temp = array[i];
+array[i] = array[j];
+array[j] = temp;
+}
+return array;
+}
+function generateWrongAnswer(correctAnswer) {
+var wrongAnswer;
+do {
+wrongAnswer = Math.floor(Math.random() * 20) + 1;
+} while (wrongAnswer === correctAnswer);
+return wrongAnswer;
+}
+function resetGame() {
+life = maxLife;
+updateLifeBar();
+document.getElementById("happy-face").innerHTML = "";
+document.getElementById("message").innerText = "";
+document.getElementById("restart-button").style.display = "none";
+document.getElementById("result-box").style.display = "none";
+currentQuestion = generateQuestion();
+displayQuestion();
+}
+function displayQuestion() {
+document.getElementById("question").innerText = currentQuestion.question;
+var optionsContainer = document.getElementById("options-container");
+optionsContainer.innerHTML = "";
+currentQuestion.options.forEach(function (option, index) {
+var optionElement = document.createElement("div");
+optionElement.className = "option";
+optionElement.innerText = option.value;
+optionElement.setAttribute("data-index", index);
+optionsContainer.appendChild(optionElement);
+});
+document.querySelectorAll(".option").forEach(function (option) {
+option.addEventListener("click", optionClickHandler);
+});
+}
+function checkSelectedOption(selectedOptionIndex) {
+var selectedOption = currentQuestion.options[selectedOptionIndex];
+if (selectedOption.isCorrect) {
+document.getElementById("result-message").innerText = "¡Respuesta correcta!";
+document.getElementById("restart-button-popup").style.display = "block";
+document.getElementById("result-message").style.color = "#1A5D00";
+document.querySelectorAll(".option").forEach(function (option) {
+option.removeEventListener("click", optionClickHandler);
+option.classList.remove("selected");
+});
+} else {
+life--;
+updateLifeBar();
+document.getElementById("result-message").innerText = "¡Respuesta incorrecta!";
+document.getElementById("restart-button-popup").style.display = "none";
+document.getElementById("result-message").style.color = "red";
+setTimeout(function () {
+document.getElementById("result-box").style.display = "none";
+}, 1000);
+if (life === 0) {
+alert('¡Perdiste!\nSe acabaron tus vidas. Da clic en "Aceptar" para continuar a la siguiente pregunta.');
+resetGame();
+}
+}
+document.getElementById("result-box").style.display = "block";
+}
+function optionClickHandler(event) {
+var clickedOption = event.target;
+if (clickedOption.classList.contains("option")) {
+document.querySelectorAll(".option").forEach(function (option) {
+option.classList.remove("selected");
+});
+clickedOption.classList.add("selected");
+checkSelectedOption(clickedOption.getAttribute("data-index"));
+}
+}
+function showMessage(message, color) {
+var messageElement = document.getElementById("message");
+messageElement.innerText = message;
+messageElement.style.color = color;
+}
+function updateLifeBar() {
+var lifeBarFill = document.getElementById("life-bar-fill");
+lifeBarFill.style.width = (life / maxLife) * 100 + '%';
+}
+resetGame();
+</script>
+</body>
+</html>

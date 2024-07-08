@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inglés</title>
+<style>
+body {
+user-select: none;
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #333;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+overflow-y: scroll;
+}
+header {
+color: black;
+text-align: center;
+padding: 1em;
+width: 300px;
+position: absolute;
+top: 25px;
+}
+#game-container {
+color: white;
+text-align: center;
+padding: 20px;
+border-radius: 0 0 10px 10px;
+margin-top: 170px;
+}
+#question-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background-color: #333;
+padding: 35px;
+border-radius: 10px;
+margin-bottom: 20px;
+margin-left: 0px;
+}
+.separator-line {
+width: 400px;
+height: 1px;
+background-color: #808080;
+margin-top: 10px;
+margin-bottom: 50px;
+}
+#life-bar {
+margin-bottom: 180px;
+display: flex;
+flex-direction: row;
+}
+#life-title-container {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+#life-title {
+margin-right: 40px;
+font-size: 75px;
+margin-bottom: 70px;
+color: #00ff00;
+}
+.life-unit {
+width: 20px;
+height: 20px;
+display: inline-block;
+position: relative;
+margin-right: 5px;
+}
+.life-unit svg {
+width: 100%;
+height: 100%;
+fill: red;
+}
+#options-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+margin-top: -28px;
+}
+#question-image {
+max-width: 190px;
+margin-bottom: 10px;
+margin-right: 510px;
+pointer-events: none;
+}
+#question {
+background-color: #333;
+border: 2px solid #808080;
+padding: 20px;
+border-radius: 10px;
+display: inline-block;
+position: relative;
+font-size: 17px;
+margin-right: 240px;
+margin-left: -490px;
+}
+.question-content {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.option {
+flex: 0 0 calc(20% - 20px);
+padding: 10px;
+margin: 10px;
+cursor: pointer;
+background-color: #333;
+border: 2px solid #808080;
+box-shadow: 0px 4px 8px #3f3f3f;
+border-radius: 20px;
+transition: background-color 0.3s, color 0.3s;
+font-size: 18px;
+}
+#result-box {
+display: none;
+width: 140px;
+height: 160px;
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+padding: 20px;
+background-color: #bbe07afe;
+border: 2px solid #bbe07afe;
+z-index: 1000;
+text-align: center;
+opacity: 1;
+}
+#life-bar-container {
+margin-top: -60px;
+margin-bottom: 80px;
+width: 100%;
+background-color: #808080;
+border-radius: 5px;
+overflow: hidden;
+}
+#life-bar-fill {
+height: 30px;
+width: 100%;
+background-color: #00ff00;
+transition: width 0.3s ease-in-out;
+}
+#text-above-image {
+position: absolute;
+top: 222px;
+right: 42%;
+transform: translateX(-50%);
+font-size: 30px;
+color: white;
+}
+#restart-button-popup:hover {
+transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+<header>
+<div id="life-title-container">
+<div id="life-title"><b>VIDAS</b></div>
+<div id="life-bar"></div>
+</div>
+</header>
+<div id="game-container">
+<div id="question-container">
+<div id="text-above-image"><b>Encuentra el significado</b></div>
+<div id="life-bar-container">
+<div id="life-bar-fill"></div>
+</div>
+<div class="question-content">
+<img src="Adults Question.png" alt="Descripción de la imagen" id="question-image">
+<p id="question"></p>
+</div>
+<div class="separator-line"></div>
+<div id="options-container"></div>
+<button id="restart-button" style="display: none; width: 140px; color: white; height: 60px; font-size: 16px; border: 2px solid #00FF7F; background-color: #00FF7F; box-shadow: 0px 4px 8px #1A5D00; border-radius: 25px;" onclick="resetGame()">Jugar otra vez</button>
+<div id="happy-face"></div>
+<div id="message"></div>
+</div>
+<div id="result-box">
+<p id="result-message"></p>
+<button id="restart-button-popup" style="display: none; width: 140px; color: white; height: 60px; font-size: 16px; border: 2px solid #00FF7F; background-color: #00FF7F; box-shadow: 0px 4px 8px #1A5D00; border-radius: 25px;" onclick="resetGame()">Jugar otra vez</button>
+</div>
+<script>
+var life = 5;
+var maxLife = 5;
+var currentQuestion;
+function generateQuestion() {
+var words = {
+"Abundant": "Abundante",
+"Acquire": "Adquirir",
+"Adequate": "Suficiente",
+"Admire": "Admirar",
+"Adventure": "Aventura",
+"Affection": "Afecto",
+"Agile": "Ágil",
+"Alleviate": "Aliviar",
+"Ambitious": "Ambicioso",
+"Amiable": "Amable",
+"Analyze": "Analizar",
+"Ancient": "Antiguo",
+"Apprehensive": "Aprehensivo",
+"Ascend": "Ascender",
+"Aromatic": "Aromático",
+"Articulate": "Articular",
+"Assemble": "Ensamblar",
+"Astounding": "Asombroso",
+"Audacious": "Audaz",
+"Authentic": "Auténtico",
+"Awkward": "Incómodo",
+"Balance": "Equilibrio",
+"Baroque": "Barroco",
+"Befriend": "Hacer amigo de",
+"Benevolent": "Benévolo",
+"Bewilder": "Desconcertar",
+"Blissful": "Dichoso",
+"Bountiful": "Abundante",
+"Bravery": "Valentía",
+"Calculate": "Calcular",
+"Calm": "Calma",
+"Captivate": "Cautivar",
+"Celebrate": "Celebrar",
+"Cerebral": "Cerebral",
+"Charming": "Encantador",
+"Cheerful": "Alegre",
+"Clandestine": "Clandestino",
+"Collaborate": "Colaborar",
+"Commence": "Comenzar",
+"Compassionate": "Compasivo",
+"Comprehend": "Comprender",
+"Conquer": "Conquistar",
+"Contribute": "Contribuir",
+"Copious": "Copioso",
+"Courageous": "Valiente",
+"Creative": "Creativo",
+"Cultivate": "Cultivar",
+"Dazzling": "Deslumbrante",
+"Delectable": "Deleitable",
+"Deliberate": "Deliberado",
+"Demeanor": "Comportamiento",
+"Desirable": "Deseable",
+"Devotion": "Devoción",
+"Diligent": "Diligente",
+"Discover": "Descubrir",
+"Distinguished": "Distinguido",
+"Diverse": "Diverso",
+"Dynamic": "Dinámico",
+"Effervescent": "Efervescente",
+"Effortless": "Sin esfuerzo",
+"Eloquent": "Elocuente",
+"Embrace": "Abrazar",
+"Empower": "Empoderar",
+"Endearing": "Encantador",
+"Endorse": "Respaldar",
+"Enhance": "Mejorar",
+"Enigmatic": "Enigmático",
+"Enrich": "Enriquecer",
+"Enthralling": "Fascinante",
+"Ephemeral": "Efímero",
+"Epic": "Épico",
+"Epitome": "Epítome",
+"Equitable": "Equitativo",
+"Euphoric": "Eufórico",
+"Evaluate": "Evaluar",
+"Evocative": "Evocador",
+"Exalt": "Exaltar",
+"Exemplary": "Ejemplar",
+"Expansive": "Expansivo",
+"Exquisite": "Exquisito",
+"Extol": "Elogiar",
+"Extraordinary": "Extraordinario",
+"Facilitate": "Facilitar",
+"Fathom": "Comprender",
+"Felicity": "Felicidad",
+"Flourish": "Florecer",
+"Formidable": "Formidable",
+"Fortitude": "Fortaleza",
+"Frivolous": "Frívolo",
+"Fulfill": "Cumplir",
+"Gargantuan": "Gargantuesco",
+"Generosity": "Generosidad",
+"Genuine": "Genuino",
+"Glorious": "Glorioso",
+"Gracious": "Gracioso",
+"Grandiose": "Grandioso",
+"Gratitude": "Gratitud",
+"Harmonious": "Armonioso",
+"Heroic": "Heroico",
+"Honorable": "Honorable",
+"Humble": "Humilde",
+"Illuminate": "Iluminar",
+"Immaculate": "Inmaculado",
+"Immerse": "Sumergir",
+"Impartial": "Imparcial",
+"Impeccable": "Impecable",
+"Implore": "Implorar",
+"Inclusive": "Inclusivo",
+"Indulge": "Indulgir",
+"Ineffable": "Inefable",
+"Ingenious": "Ingenioso",
+"Inquisitive": "Inquisitivo",
+"Inspire": "Inspirar",
+"Intrepid": "Intrépido",
+"Invigorate": "Avigorar",
+"Jubilant": "Jubiloso",
+"Keen": "Agudo",
+"Kindred": "Afín",
+"Laconic": "Lacónico",
+"Lavish": "Espléndido",
+"Legitimate": "Legítimo",
+"Limber": "Flexible",
+"Luminescent": "Luminiscente",
+"Magnificent": "Magnífico",
+"Marvel": "Maravilla",
+"Meander": "Divagar",
+"Mellifluous": "Melifluo",
+"Meticulous": "Meticuloso",
+"Mirthful": "Alegre",
+"Motivate": "Motivar",
+"Mystify": "Místificar",
+"Nourish": "Nutrir",
+"Oasis": "Oasis",
+"Oblige": "Obligar",
+"Opulent": "Opulento",
+"Pantomime": "Pantomima",
+"Paragon": "Paradigma",
+"Passionate": "Apasionado",
+"Persevere": "Perseverar",
+"Pervasive": "Pervasivo",
+"Pinnacle": "Cima",
+"Placid": "Plácido",
+"Ponder": "Reflexionar",
+"Prolific": "Prolífico",
+"Prosperous": "Próspero",
+"Prowess": "Destreza",
+"Pungent": "Pungente",
+"Quaint": "Pintoresco",
+"Quell": "Apaciguar",
+"Quiescent": "Quiescente",
+"Radiant": "Radiante",
+"Rapture": "Arrobamiento",
+"Reconcile": "Reconciliar",
+"Reflect": "Reflejar",
+"Rejoice": "Regocijarse",
+"Relinquish": "Renunciar",
+"Resilient": "Resiliente",
+"Resplendent": "Resplandeciente",
+"Rhapsody": "Rapsodia",
+"Riveting": "Fascinante",
+"Savor": "Disfrutar",
+"Serenade": "Serenata",
+"Serenity": "Serenidad",
+"Serendipity": "Serendipia",
+"Sincere": "Sincero",
+"Spectacular": "Espectacular",
+"Splendid": "Espléndido",
+"Synchronize": "Sincronizar",
+"Transcend": "Trascender",
+"Tranquil": "Tranquilo",
+"Uplift": "Elevar",
+"Vibrant": "Vibrante",
+"Whimsical": "Caprichoso",
+"Wondrous": "Maravilloso",
+"Zeal": "Entusiasmo",
+"Zephyr": "Céfiro",
+"Absolve": "Absolver",
+"Accommodate": "Alojar",
+"Accomplish": "Lograr",
+"Accurate": "Preciso",
+"Adorn": "Adornar",
+"Adulate": "Adular",
+"Adventurous": "Aventurero",
+"Affluent": "Adinerado",
+"Agitate": "Agitar",
+"Alacrity": "Prontitud",
+"Alleviation": "Alivio",
+"Altruistic": "Altruista",
+"Amass": "Acumular",
+"Ambiguous": "Ambiguo",
+"Amend": "Enmendar",
+"Amicable": "Amigable",
+"Amplify": "Amplificar",
+"Anecdote": "Anécdota",
+"Anguish": "Angustia",
+"Animated": "Animado",
+"Annihilate": "Aniquilar",
+"Anticipate": "Anticipar",
+"Apathetic": "Apatía",
+"Aplomb": "Soltura",
+"Apparition": "Aparición",
+"Appraise": "Valorar",
+"Arbitrary": "Arbitrario",
+"Arduous": "Arduo",
+"Aspiration": "Aspiración",
+"Assemble": "Reunir",
+"Assimilate": "Asimilar",
+"Astute": "Astuto",
+"Atone": "Expiar",
+"Atrocious": "Atroz",
+"Auspicious": "Auspicioso",
+"Authenticate": "Autenticar",
+"Banish": "Desterrar",
+"Belligerent": "Beligerante",
+"Benevolent": "Benévolo",
+"Brevity": "Brevidad",
+"Cacophony": "Cacofonía",
+"Cajole": "Cautivar",
+"Camaraderie": "Camaradería",
+"Candor": "Candor",
+"Capitulate": "Capitular",
+"Cautious": "Cauteloso",
+"Censure": "Censurar",
+"Cerebral": "Cerebral",
+"Chastise": "Castigar",
+"Circumspect": "Cauteloso",
+"Clemency": "Clemencia",
+"Coalesce": "Coalescer",
+"Collide": "Colisionar",
+"Commiserate": "Conmiserar",
+"Complacent": "Complaciente",
+"Concede": "Conceder",
+"Concur": "Concurrir",
+"Condescend": "Condescender",
+"Constrict": "Constringir",
+"Contentious": "Contencioso",
+"Conundrum": "Enigma",
+"Convoke": "Convocar",
+"Corroborate": "Corroborar",
+"Crucible": "Crisol",
+"Cryptic": "Críptico",
+"Culminate": "Culminar",
+"Debilitate": "Debilitar",
+"Decimate": "Diezmar",
+"Defer": "Deferir",
+"Deflect": "Desviar",
+"Deft": "Hábil",
+"Delectation": "Deleite",
+"Deliberate": "Deliberar",
+"Delineate": "Delinear",
+"Demure": "Recatado",
+"Denounce": "Denunciar",
+"Deplore": "Lamentar",
+"Deprecate": "Depreciar",
+"Deride": "Burlarse",
+"Desecrate": "Profanar",
+"Desist": "Desistir",
+"Deterrent": "Deterrente",
+"Deviate": "Desviar",
+"Diaphanous": "Diáfano",
+"Disparage": "Desacreditar",
+"Dissipate": "Disipar",
+"Divulge": "Divulgar",
+"Eloquent": "Elocuente",
+"Elucidate": "Elucidar",
+"Emaciate": "Emaciar",
+"Emancipate": "Emancipar",
+"Embellish": "Embellcer",
+"Empathize": "Empatizar",
+"Endorse": "Avalar",
+"Enervate": "Enervar",
+"Engender": "Engendrar",
+"Enrapture": "Arrebatar",
+"Enunciate": "Enunciar",
+"Ephemeral": "Efímero",
+"Epiphany": "Epifanía",
+"Eradicate": "Erradicar",
+"Erudite": "Erudito",
+"Esoteric": "Esotérico",
+"Espouse": "Adoptar",
+"Estrange": "Alejar",
+"Ethereal": "Etéreo",
+"Eulogize": "Elogiar",
+"Exacerbate": "Exacerbar",
+"Exasperate": "Exasperar",
+"Exonerate": "Exonerar",
+"Expunge": "Expurgar",
+"Extricate": "Excarcelar",
+"Exult": "Exultar",
+"Facetious": "Faceto",
+"Fastidious": "Escrupuloso",
+"Fathom": "Sondear",
+"Feasible": "Factible",
+"Fervent": "Ferviente",
+"Fetter": "Encadenar",
+"Flagrant": "Flagrante",
+"Foment": "Fomentar",
+"Forsake": "Abandonar",
+"Fortify": "Fortificar",
+"Foster": "Fomentar",
+"Fractious": "Irascible",
+"Furtive": "Furtivo",
+"Garrulous": "Parlanchín",
+"Genial": "Afable",
+"Gregarious": "Sociable",
+"Guffaw": "Carcajada",
+"Harangue": "Discurso",
+"Haughty": "Altivo",
+"Heinous": "Atroz",
+"Herald": "Anunciar",
+"Hinder": "Obstaculizar",
+"Homage": "Homenaje",
+"Hubris": "Hybris",
+"Immutable": "Inmutable",
+"Impede": "Obstaculizar",
+"Implacable": "Implacable",
+"Ineffable": "Inefable",
+"Inexorable": "Inexorable",
+"Infallible": "Infallible",
+"Ingratiate": "Ganarse",
+"Inimical": "Hostil",
+"Inscrutable": "Inescrutable",
+"Insidious": "Insidioso",
+"Insipid": "Insípido",
+"Insolent": "Insolente",
+"Intransigent": "Intransigente",
+"Irresolute": "Irresoluto",
+"Juxtapose": "Yuxtaponer",
+"Kowtow": "Inclinarse",
+"Lament": "Lamentar",
+"Languish": "Languidecer",
+"Lassitude": "Lassitud",
+"Laudable": "Loable",
+"Lethargic": "Lérgico",
+"Levity": "Levedad",
+"Limpid": "Límpido",
+"Loquacious": "Hablador",
+"Lugubrious": "Lúgubre",
+"Luminous": "Luminoso",
+"Malevolent": "Malevolente",
+"Malign": "Difamar",
+"Mellifluous": "Melifluo",
+"Mendacious": "Mendaz",
+"Mercenary": "Mercenario",
+"Mercurial": "Voluble",
+"Meticulous": "Minucioso",
+"Mitigate": "Mitigar",
+"Modicum": "Pizca",
+"Morose": "Taciturno",
+"Nefarious": "Nefario",
+"Nonchalant": "Despreocupado",
+"Obfuscate": "Ofuscar",
+"Obfuscate": "Obnubilar",
+"Obstinate": "Obstinado",
+"Ominous": "Sombrío",
+"Onerous": "Oneroso",
+"Opulent": "Opulento",
+"Palpable": "Palpable",
+"Pander": "Complacer",
+"Parsimonious": "Tacaño",
+"Pathos": "Patetismo",
+"Peculiar": "Peculiar",
+"Penchant": "Predilección",
+"Pensive": "Pensativo",
+"Pernicious": "Perjudicial",
+"Petulant": "Petulante",
+"Piquant": "Picante",
+"Plethora": "Plétora",
+"Poignant": "Conmovedor",
+"Ponderous": "Pesado",
+"Pontificate": "Pontificar",
+"Pragmatic": "Pragmático",
+"Precarious": "Precario",
+"Predilection": "Predilección",
+"Preposterous": "Absurdo",
+"Proclivity": "Propensión",
+"Prodigious": "Prodigioso",
+"Prolific": "Prolífico",
+"Propensity": "Propensión",
+"Proscribe": "Proscribir",
+"Quandary": "Dilema",
+"Quell": "Apaciguar",
+"Quixotic": "Quijotesco",
+"Rambunctious": "Alborotador",
+"Rapacious": "Rapaz",
+"Rapturous": "Arrobado",
+"Ravenous": "Voraz",
+"Recluse": "Recluso",
+"Redolent": "Redolente",
+"Refractory": "Refractario",
+"Relegate": "Relegar",
+"Reproach": "Reprochar",
+"Repudiate": "Repudiar",
+"Rescind": "Rescindir",
+"Resplendent": "Resplandeciente",
+"Reticent": "Reticente",
+"Rhetoric": "Retórica",
+"Rigorous": "Riguroso",
+"Ruminate": "Rumiar",
+"Sagacious": "Sagaz",
+"Salient": "Saliente",
+"Salubrious": "Salubre",
+"Sanguine": "Sanguíneo",
+"Sardonic": "Sardónico",
+"Savvy": "Perspicaz",
+"Sedulous": "Sedulidad",
+"Serpentine": "Serpenteante",
+"Sibilant": "Sibilante",
+"Somber": "Sombrío",
+"Sporadic": "Esporádico",
+"Squalid": "Sórdido",
+"Squander": "Malgastar",
+"Staid": "Serio",
+"Stalwart": "Robusto",
+"Stoic": "Estoico",
+"Sublime": "Sublime",
+"Succinct": "Sucinto",
+"Sycophant": "Sicofanta",
+"Taciturn": "Taciturno",
+"Tantalize": "Tantalizar",
+"Tenebrous": "Tenebroso",
+"Tentative": "Tentativo",
+"Tenuous": "Tenue",
+"Timorous": "Temeroso",
+"Torpid": "Pétreo",
+"Truncate": "Truncar",
+"Ubiquitous": "Ubicuo",
+"Unassailable": "Irrefutable",
+"Unctuous": "Untuoso",
+"Undulate": "Ondular",
+"Unflappable": "Imperturbable",
+"Unfettered": "Desatado",
+"Unpalatable": "Desagradable",
+"Unscrupulous": "Falto de escrúpulos",
+"Untenable": "Insostenible",
+"Unwarranted": "Injustificado",
+"Vacillate": "Vacilar",
+"Vapid": "Insípido",
+"Venal": "Venal",
+"Venerable": "Venerable",
+"Voracious": "Voraz",
+"Wanton": "Desenfrenado",
+"Wistful": "Melancólico",
+"Writhe": "Retorcerse",
+"Zealous": "Zeloso",
+};
+var wordsArray = Object.entries(words);
+var randomIndex = Math.floor(Math.random() * wordsArray.length);
+var randomPair = wordsArray[randomIndex];
+var correctWord = randomPair[0];
+var correctMeaning = randomPair[1];
+var options = [{ value: correctMeaning, isCorrect: true }];
+for (var i = 0; i < 5; i++) {
+options.push({ value: generateWrongMeaning(words, correctMeaning), isCorrect: false });
+}
+options = shuffleArray(options);
+return {
+question: '¿Qué quiere decir "' + correctWord + '" en español?',
+options: options
+};
+}
+function shuffleArray(array) {
+for (var i = array.length - 1; i > 0; i--) {
+var j = Math.floor(Math.random() * (i + 1));
+var temp = array[i];
+array[i] = array[j];
+array[j] = temp;
+}
+return array;
+}
+function generateWrongMeaning(words, correctMeaning) {
+var wrongMeaning;
+do {
+var randomIndex = Math.floor(Math.random() * Object.keys(words).length);
+wrongMeaning = Object.values(words)[randomIndex];
+} while (wrongMeaning === correctMeaning);
+return wrongMeaning;
+}
+function resetGame() {
+life = maxLife;
+updateLifeBar();
+document.getElementById("happy-face").innerHTML = "";
+document.getElementById("message").innerText = "";
+document.getElementById("restart-button").style.display = "none";
+document.getElementById("result-box").style.display = "none";
+currentQuestion = generateQuestion();
+displayQuestion();
+}
+function displayQuestion() {
+document.getElementById("question").innerText = currentQuestion.question;
+var optionsContainer = document.getElementById("options-container");
+optionsContainer.innerHTML = "";
+currentQuestion.options.forEach(function (option, index) {
+var optionElement = document.createElement("div");
+optionElement.className = "option";
+optionElement.innerText = option.value;
+optionElement.setAttribute("data-index", index);
+optionsContainer.appendChild(optionElement);
+});
+document.querySelectorAll(".option").forEach(function (option) {
+option.addEventListener("click", optionClickHandler);
+});
+}
+function checkSelectedOption(selectedOptionIndex) {
+var selectedOption = currentQuestion.options[selectedOptionIndex];
+if (selectedOption.isCorrect) {
+document.getElementById("result-message").innerText = "¡Respuesta correcta!";
+document.getElementById("restart-button-popup").style.display = "block";
+document.getElementById("result-message").style.color = "#1A5D00";
+document.querySelectorAll(".option").forEach(function (option) {
+option.removeEventListener("click", optionClickHandler);
+option.classList.remove("selected");
+});
+} else {
+life--;
+updateLifeBar();
+document.getElementById("result-message").innerText = "¡Respuesta incorrecta!";
+document.getElementById("restart-button-popup").style.display = "none";
+document.getElementById("result-message").style.color = "red";
+setTimeout(function () {
+document.getElementById("result-box").style.display = "none";
+}, 1000); 
+if (life === 0) {
+alert('¡Perdiste!\nSe acabaron tus vidas. Da clic en "Aceptar" para continuar a la siguiente pregunta.');
+resetGame();
+}
+}
+document.getElementById("result-box").style.display = "block";
+}
+function optionClickHandler(event) {
+var clickedOption = event.target;
+if (clickedOption.classList.contains("option")) {
+document.querySelectorAll(".option").forEach(function (option) {
+option.classList.remove("selected");
+});
+clickedOption.classList.add("selected");
+checkSelectedOption(clickedOption.getAttribute("data-index"));
+}
+}
+function showMessage(message, color) {
+var messageElement = document.getElementById("message");
+messageElement.innerText = message;
+messageElement.style.color = color;
+}
+function updateLifeBar() {
+var lifeBarFill = document.getElementById("life-bar-fill");
+lifeBarFill.style.width = (life / maxLife) * 100 + '%';
+}
+resetGame();
+</script>
+</body>
+</html>
