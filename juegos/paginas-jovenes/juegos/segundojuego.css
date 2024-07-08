@@ -1,0 +1,428 @@
+.espacio {
+    background-color: black;
+    color: rgb(255, 255, 255);
+    margin: 0;
+    font-family:'Lekton';
+    text-align: center;
+}
+
+@font-face{
+    font-family:'Lekton';
+    src:url(../../Lekton/Lekton-Regular.ttf);
+    }
+.caja-texto {
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width:100%;
+    background-color: #000000;
+    text-align: center;
+    z-index: 1000;
+    border:solid 2px #fff;
+    padding:10px;
+}
+.texto {
+    display: flex;
+    justify-content: flex-end;
+    text-align: center;
+    margin: 100px;
+    margin-block: 0px;
+}
+.espacio_2 {
+    margin-top: 100px;
+    height: 98vh;
+    padding: 20px;
+    background-size:cover;
+    background-repeat: no-repeat;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+     "n1 n1 n1 n4"
+     "n1 n1 n1 n4"
+     "n1 n1 n1 n4";
+}
+#videoFondo {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    z-index: -1;
+}
+
+
+.planetas {
+   border:solid 1px;
+   display:flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border-radius:100%;
+    margin: 20px;
+    color: #fff;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    overflow: visible;
+}
+.planetas img {
+    width:100px;
+    height:100px;
+}
+    #Mercurio {
+    filter: drop-shadow(0 0 10px rgba(55, 55, 55, 0.628));
+    grid-area:n1;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:250px;
+    height:250px;
+    z-index:8;
+    left:280px;
+    }
+    #Mercurio>img{
+        height:30px;
+        width:30px;
+        animation:Mercurio-rotation 20411ms linear infinite;
+        }
+        @keyframes Mercurio-rotation {
+            0%{
+            transform:rotate(0deg) translate(125px) rotate(0deg);
+            }
+            100%{
+            transform:rotate(360deg) translate(125px) rotate(360deg);  
+            }
+            } 
+    #Sol {
+    filter: drop-shadow(0 0 10px rgba(240, 248, 13, 0.621));
+    grid-area:n1;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:200px;
+    height:200px;
+    z-index:9;
+    left:310px;
+    border:none;
+    }
+    #Sol>img{
+    width:220px;
+    height:220px;
+    }
+    #Venus{
+    filter: drop-shadow(0 0 10px rgb(97, 97, 97));
+    grid-area:n1;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:300px;
+    height:300px;
+    z-index:7;
+    left:255px;
+    }
+    #Venus>img{
+        height:30px;
+        width:30px;
+        animation:Venus-rotation 48600ms linear infinite;
+        }
+        @keyframes Venus-rotation {
+            0%{
+            transform:rotate(0deg) translate(150px) rotate(0deg);
+            }
+            100%{
+            transform:rotate(360deg) translate(150px) rotate(360deg);  
+            }
+            } 
+    #Tierra{
+    grid-area:n1;
+    filter: drop-shadow(0 0 10px rgba(49, 194, 242, 0.681));
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:400px;
+    height:400px;
+    z-index:6;
+    left:205px;
+    }
+    #Tierra>img{
+        height:30px;
+        width:30px;
+        animation:Tierra-rotation 34600ms linear infinite;
+        }
+        @keyframes Tierra-rotation {
+            0%{
+            transform:rotate(0deg) translate(200px) rotate(0deg);
+            }
+            100%{
+            transform:rotate(360deg) translate(200px) rotate(360deg);  
+            }
+            }     
+    #Marte{
+    filter: drop-shadow(0 0 10px rgba(248, 40, 13, 0.64));
+    grid-area:n1;
+    position:relative;
+    left:102px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:450px;
+    height:450px;
+    z-index:5;
+    left:180px;
+    }
+    #Marte>img{
+        height:30px;
+        width:30px;
+        animation:Marte-rotation 40021ms linear infinite;
+        }
+    @keyframes Marte-rotation {
+    0%{
+    transform:rotate(0deg) translate(225px) rotate(0deg);
+    }
+    100%{
+    transform:rotate(360deg) translate(225px) rotate(360deg);  
+    }
+    }        
+    #Jupiter{
+    grid-area:n1;
+    filter: drop-shadow(0 0 10px rgba(255, 174, 0, 0.734));
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:500px;
+    height:500px;
+    z-index:4;
+    left:155px;
+    }
+    #Jupiter>img{
+        height:40px;
+        width:40px;
+        animation:Jupiter-rotation 66001ms linear infinite;
+        }
+    @keyframes Jupiter-rotation {
+    0%{
+    transform:rotate(0deg) translate(250px) rotate(0deg);
+    }
+    100%{
+    transform:rotate(360deg) translate(250px) rotate(360deg);  
+    }
+    }    
+    #Saturno{
+    grid-area:n1;
+    filter: drop-shadow(0 0 10px rgba(158, 108, 0, 0.657));
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:580px;
+    height:580px;
+    z-index:3;
+    left:118px;
+
+    }
+    #Saturno>img{
+        height:40px;
+        width:40px;
+        animation:Saturno-rotation 48600ms linear infinite;
+        }
+    @keyframes Saturno-rotation {
+     0%{
+    transform:rotate(0deg) translate(290px) rotate(0deg);
+    }
+    100%{
+    transform:rotate(360deg) translate(290px) rotate(360deg);  
+    }
+        }
+
+    #Urano{
+    grid-area:n1;
+    filter: drop-shadow(0 0 10px rgba(54, 165, 255, 0.695));
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:625px;
+    height:625px;
+    z-index:2;
+    left:95px;
+}
+#Urano>img{
+height:40px;
+width:40px;
+animation:Urano-rotation 50900ms linear infinite;
+}
+@keyframes Urano-rotation {
+    0%{
+    transform:rotate(0deg) translate(312.5px) rotate(0deg);
+    }
+    100%{
+    transform:rotate(360deg) translate(312.5px) rotate(360deg);  
+    }
+}
+#Neptuno {
+    filter: drop-shadow(0 0 10px rgba(112, 150, 255, 0.7));
+    grid-area: n1;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid white;
+    width: 720px;
+    height: 720px;
+    z-index: 1;
+    left: 70px;
+    top: 110px;  
+}
+
+#Neptuno > img{
+height:50px;
+width:50px;
+animation:Neptuno-rotation 53954ms linear infinite;
+}
+@keyframes Neptuno-rotation {
+0%{
+transform:rotate(0deg) translate(360px) rotate(0deg);
+}
+100%{
+transform:rotate(360deg) translate(360px) rotate(360deg);  
+}
+}
+.informacion-oculta{
+    width:440px;
+    background-color: #00000065;
+    font-size: 18px;
+    height: 103%;
+    text-align:center;
+    margin-top: 20px;
+    padding: 20px;
+    grid-area: n4;
+    border: solid 1px #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.informacion-oculta img {
+    max-width: 100%;
+    max-height: 200px;
+    margin-bottom: 10px;
+}
+.planetas:hover {
+    cursor: pointer;
+}
+.segundojuego{
+font-family:'Lekton';
+width:300px;
+height:90px;
+font-size:40px;
+background-color:rgb(54, 179, 50);
+border:none;
+color:white;
+transition:height,width,font-size 0.5s;
+border-radius:20px;
+position: relative;
+margin:10px;
+}
+.segundojuego:hover{
+box-shadow:0px 0px 10px rgb(9, 255, 0);
+text-shadow:0px 0px 10px rgb(9, 255, 0);
+width:312px;
+height:108px;
+font-size:48px;
+}
+#regresar-1{
+font-size:40px
+}
+a{
+color:white;
+text-decoration: none;
+}
+.nombres{
+    font-size:20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+footer{
+position: relative;
+top:30px;
+background-color: #000000;
+}
+/*  //////////////////////////////         juego matematico completar    ////////////////////////         */
+.salaM{
+background-color: rgb(71, 123, 217);
+color: #ffffff;
+text-align: center;
+font-family: Arial, Helvetica, sans-serif;
+}
+.encabezado{
+margin:10px;
+}
+.complete-cuerpo{
+margin:10px;
+height:100vh;
+text-align: center;
+display:flex;
+justify-content:center;
+align-items: center;
+flex-direction:column;
+}
+.ecuaciones{
+border:solid;
+margin:10px;
+width:95%;
+height:95%;
+display:flex;
+align-items:end;
+justify-content:center;
+background-color: #000000bd;
+}
+.veri{
+position: relative;
+margin:10px;
+color: #ffffff;
+width:250px;
+height:48px;
+border:none;
+border-radius:20px;
+background-color: rgb(102, 0, 255);
+transition:width,heigth,font-size 0.5s;
+z-index:10;
+}
+.veri:hover{
+width:280px;
+height:56px;
+font-size:20px;
+box-shadow: 0 0 10px #ff00d0;
+}
+.completa{
+position: relative;
+display: flex;
+flex-direction:column;
+align-items: center;
+height:100%;
+width:100%;
+z-index:1;
+}
+#ecuacion-incompleta{
+font-size:90px;
+}
+.input-ecuacion{
+font-size:24px;
+text-align:center;
+border:none;
+border-radius:10px;
+width:390px;
+height:40px;
+margin:20px;
+}

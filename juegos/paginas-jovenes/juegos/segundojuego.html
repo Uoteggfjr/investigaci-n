@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./segundojuego.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body class="espacio">
+    <div class="video-container">
+        <video autoplay muted loop id="videoFondo">
+            <source src="./y2mate.is - Stars Twinkling Particles Overlay Royalty Free HD Video CC0 -PR6yVvgSLLQ-1080pp-1705224655.mp4" type="video/mp4">
+            Tu navegador no soporta el elemento de video.
+        </video>
+    <div class="caja-texto"> 
+        <a href="../pagina-jovenes.html"><span id="regresar-1" class="material-symbols-outlined">
+            undo
+            </span></a>
+        <h3 class="texto">Los planetas del sistema solar son (en orden de cercanía al Sol): Mercurio, Venus, Tierra, Marte, Júpiter, Saturno, Urano y Neptuno. Aprende un poco antes de ir al juego...</h3>
+   </div> 
+    <div class="espacio_2">
+        <div  class="planetas" id="Sol" onclick="mostrarInformacion('Sol')">
+            <img  src="./imgl/sol2.png" alt="Imagen del Sol"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Mercurio" onclick="mostrarInformacion('Mercurio')">
+            <img src="./imgl/mercurio.png" alt="Imagen de Mercurio"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Tierra" onclick="mostrarInformacion('Tierra')">
+            <img src="./imgl/terra.png" alt="Imagen de Tierra"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Neptuno" onclick="mostrarInformacion('Neptuno')">
+            <img src="./imgl/neptuno2.png" alt="Imagen de Neptuno"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Marte" onclick="mostrarInformacion('Marte')">
+            <img src="./imgl/marte.png" alt="Imagen de Marte"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Venus" onclick="mostrarInformacion('Venus')">
+            <img src="./imgl/venus.png" alt="Imagen de Venus"> <div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Jupiter" onclick="mostrarInformacion('Jupiter')">
+            <img src="./imgl/jupi.png" alt="Imagen de Jupiter"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Saturno" onclick="mostrarInformacion('Saturno')">
+            <img src="./imgl/saturnorgh.png" alt="Imagen de Saturno"><div class="nombres"></div>
+        </div>
+        <div class="planetas" id="Urano" onclick="mostrarInformacion('Urano')">
+            <img src="./imgl/urano.png" alt="Imagen de Urano"><div class="nombres"></div>
+        </div>
+        
+        <div id="informacionPlaneta" class="informacion-oculta">
+            <img id="imagenPlaneta" src="./imgl/aviso.png" alt="Imagen del planeta">
+            <p id="textoPlaneta">Información detallada del planeta</p>
+        </div>
+    </div>
+</div>
+<footer>
+    <button class="segundojuego"><a href="./Juegoplaneta.html">Ir al juego</a></button>
+    <script src="./juego3.js"></script>
+</footer>
+</body>
+</html>

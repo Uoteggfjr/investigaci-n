@@ -1,0 +1,83 @@
+.granja{
+margin:5px;
+padding:0;
+font-family: cursive;
+background-image:url(https://img.freepik.com/vector-gratis/granja-escena-naturaleza-granero-molino-viento-espantapajaros_1308-51384.jpg?size=626&ext=jpg&ga=GA1.1.1687694167.1703808000&semt=ais);
+background-size: cover;
+background-repeat: no-repeat;
+}
+h1{
+display:flex;
+align-items: center;
+justify-content: center;
+position: relative;
+height:100px;
+left:200px;
+width:70%;
+text-align: center;
+color:rgb(0, 0, 0);
+background-color: #ffffffdc;
+}
+#imagenram{
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.imagen{
+border:solid;
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center center;
+width:300px;
+height:300px;
+}
+.contenedor{
+padding:30px;
+}
+.divinput{
+margin:5px;
+display:flex;
+justify-content:center;
+}
+.divboton{
+display:flex;
+justify-content: center;
+}
+.input{
+margin:10px;
+text-align:center;
+width:400px;
+height:40px;
+border:solid;
+border-radius:20px;
+font-size:25px;
+font-family:cursive;
+}
+.primerjuego{
+width:100px;
+height:40px;
+border:none;
+font-family: cursive;
+border-radius:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.primerjuego:hover{
+width:112px;
+height:56px;
+border:solid;
+}
+#regresar{
+text-decoration:none;
+padding-left:40px;
+padding-top:20px;
+display:flex;
+align-items: center;
+color:white;
+font-size:50px;
+text-shadow: 4px 4px 4px rgba(0.5, 0, 0, 0.5);
+}
+h5{
+font-size:20px;
+}

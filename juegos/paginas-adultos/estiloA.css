@@ -1,0 +1,157 @@
+
+    @font-face{
+    font-family:'RubikdoodleShadow';
+    src:url(./Rubik_Doodle_Shadow/RubikDoodleShadow-Regular.ttf);
+    }
+    h1{
+    position: relative;
+    z-index:3;
+    text-align:center;
+    color:rgb(230, 0, 255);
+    font-size:40px;
+    left:495px;
+    top:20px;
+    width:400px;
+    }
+    .contenedor-mayor{
+    position: relative;
+    margin:10px;
+    padding:20px;
+    height:100vh;
+    z-index:2;
+    }
+    .subcontenedor{
+    height:100vh;
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:repeat(4,1fr);
+    grid-template-areas:
+    "n1 n1 n2 n2 n3 n3"
+    "n1 n1 n2 n2 n3 n3"
+    "n4 n4 n5 n5 n6 n6"
+    "n4 n4 n5 n5 n6 n6"
+    ;
+    }
+    .cajas{
+    border:solid #fff;
+    border-radius:10px;
+    margin:5px;
+    margin-bottom:50px;
+    display:flex;
+    justify-content:center;
+    align-items:end;
+    }
+    a{
+    font-size:25px;
+    text-decoration:none;
+    color:rgb(204, 0, 255);
+    text-align:center;
+    }
+    #primer-juego{
+    background-image:url(./memoriza.jpg);
+    background-size:cover;
+    grid-area:n1;
+    }
+    #segundo-juego{
+    background-image:url(./pasa.jpg);
+    background-size: cover;
+    grid-area:n3;}
+
+    #tercer-juego{
+    background-image:url(./binario-230.jpg);
+    background-size: cover;
+    grid-area:n2;}
+    
+    
+    h3 {
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    padding: 10px; 
+    backdrop-filter: blur(5px);
+    }
+    
+    h3:hover{
+    color:black;
+    }
+    
+/* animacion*/
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+} 
+.AnimacionA 
+{
+  font-family:'RubikdoodleShadow' ;
+  min-height: 100vh;
+  background: #0c192c; 
+} 
+.containerA
+{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    
+}
+.bubbles
+{
+    position: relative;
+    display: flex;
+    
+}
+.bubbles span
+{
+    position: relative;
+    width: 15%;
+    height: 40px;
+    background: #4fc3dc;
+    margin: 0 4px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px #4fc3dc22, 
+    0 0 20px #4fc3dc, 
+    0 0 40px #4fc3dc, 
+    0 0 5px 2px rgba(173, 216, 230, 0.3), 
+    0 0 20px 6px rgba(173, 216, 230, 0.2),
+     0 0 40px 12px rgba(173, 216, 230, 0.1);
+    animation: animate 15s linear infinite;
+    animation-duration: calc(50000ms/var(--i));
+}
+
+.bubbles span:nth-child(even)
+{
+    background: #ff2d75;
+    box-shadow: 0 0 0 5px #ff2d7522, 
+    0 0 20px #ff2d75, 0 0 40px #ff2d75, 
+    0 0 5px 2px rgba(255, 45, 117, 0.3),
+     0 0 20px 6px rgba(255, 45, 117, 0.2), 
+     0 0 40px 12px rgba(255, 45, 117, 0.1);
+}
+
+@keyframes animate
+{ 
+   0%
+   { 
+    transform: translateY(100vh) scale(0.1);
+   } 
+   100%
+   { 
+    transform: translateY(-100vh) scale(1);
+   } 
+}
+#regresar {
+    text-decoration: none;
+    padding-left: 40px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 60px;
+    text-shadow: 2px 2px 2px rgba( 0, 0, 0.5);
+}
+
+h5{
+  font-size:20px;
+  }
+

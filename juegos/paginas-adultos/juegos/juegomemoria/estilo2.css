@@ -1,0 +1,88 @@
+body{
+margin:0;
+padding:5px;
+font-family:sans-serif;
+background-color: rgb(23, 126, 126);
+height:100vh;
+}
+h1{
+text-align: center;
+color:white;
+}
+.contenedor{
+text-align: center;
+height:100vh;
+}
+.numero1{
+margin: 50px auto;
+outline:none;
+text-align: center;
+width:400px;
+height:32px;
+border:none;
+border-radius:20px;
+background-color: rgba(255, 255, 255, 0.767);
+}
+#respuesta{
+border-radius:50px;
+display:flex;
+justify-content:center;
+align-items:center;
+color:white;
+border:solid;
+height:80px;
+background-color: rgba(240, 240, 240, 0.219);
+}
+footer{
+margin:0;
+height:40px;
+text-align: center;
+color:white;
+display:flex;
+justify-content:center;
+
+}
+.selop{
+border:none;
+font-size:20px;
+color:white;
+border-radius:20px;
+background-color:rgb(118, 134, 242)
+}
+.boton{
+background-color:rgb(255, 255, 255);
+width:120px;
+height:32px;
+border:none;
+border-radius:30px;
+font-size:15px;
+margin:20px;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+.boton:hover{
+background-color:rgb(164, 179, 248);
+font-size:20px;
+width:128px;
+border:solid;
+color:white;
+}
+.botones{
+display:flex;
+justify-content:center;
+}
+.contenedorla{
+display:flex;
+justify-content:center;
+}
+.informacionb{
+margin:20px;
+border:solid 2px;
+color:white;
+font-size:24px;
+background-color: rgba(0, 0, 0, 0.483);
+}
+p{
+margin:10px;
+}

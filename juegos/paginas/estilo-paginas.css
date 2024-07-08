@@ -1,0 +1,112 @@
+body{
+margin:0px;
+padding:0;
+font-family:'RubikdoodleShadow';
+height:100vh;
+}
+@font-face{
+font-family:'RubikdoodleShadow';
+src:url(./Rubik_Doodle_Shadow/RubikDoodleShadow-Regular.ttf);
+}
+h1{
+position: relative;
+text-align:center;
+color:rgb(255, 0, 242);
+font-size:40px;
+top:20px;
+}
+.contenedor-mayor{
+margin:10px;
+padding:20px;
+height:100vh;
+}
+.subcontenedor{
+height:100vh;
+display:grid;
+grid-template-columns:repeat(6,1fr);
+grid-template-rows:repeat(4,1fr);
+grid-template-areas:
+"n1 n1 n2 n2 n3 n3"
+"n1 n1 n2 n2 n3 n3"
+"n4 n4 n5 n5 n6 n6"
+"n4 n4 n5 n5 n6 n6"
+;
+}
+.cajas{
+border:solid aqua;
+border-radius:10px;
+margin:5px;
+margin-bottom:50px;
+display:flex;
+justify-content:center;
+align-items:end;
+}
+a{
+font-size:25px;
+text-decoration:none;
+color:rgb(204, 0, 255);
+text-align:center;
+}
+#primer-juego{
+background-image:url(./animales1.jpg);
+background-size:cover;
+grid-area:n1;
+}
+#tercer-juego{
+background-image:url(matematicas.jpg);
+background-size: cover;
+grid-area:n3;
+}
+
+h3 {
+background-color: rgba(255, 255, 255, 0.5);
+text-align: center;
+padding: 10px; 
+backdrop-filter: blur(5px);
+}
+
+h3:hover{
+color:black;
+}
+/*estilo video*/
+.video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#videoFondo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+}
+
+
+.contenido {
+  position: relative;
+  z-index:-1;}
+
+ 
+  #regresar {
+    text-decoration: none;
+    padding-left: 40px;
+    padding-top: 20px;
+    display: flex;
+    align-items: center;
+    color:aqua;
+    font-size: 60px;
+    text-shadow: 4px 4px 4px rgba(0.5, 0, 0, 0.5);
+}
+
+h5{
+  font-size:20px;
+  }

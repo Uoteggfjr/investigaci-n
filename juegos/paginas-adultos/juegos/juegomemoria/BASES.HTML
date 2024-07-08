@@ -1,0 +1,43 @@
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio1</title>
+    <link rel="stylesheet" href="./estilo2.css">
+    
+</head>
+<body>
+    <main class="contenedor">
+        <h1>Elije la base e introduce tu numero</h1>
+        <select name="aqui elija" id="opciones" class="selop">
+            <option>BASE 10 A BASE 2</option>
+            <option>BASE 10 A BASE 8</option>
+            <option>BASE 10 A BASE 16</option>
+            <option>BASE 2  A BASE 10</option>
+            <option>BASE 2  A BASE 8</option>
+            <option>BASE 2  A BASE 16</option>
+            </select>
+          <form action="../index.html">
+             <label for="numero1" class="contenedorla">
+              <input type="number" id="numero1"class="numero1"  placeholder="Ingrese un numero">
+             </label>
+             <div class="botones">
+                 <button type="button" class="boton" onclick="base()"><h3>Aceptar</h3></button>
+             </div>
+             <div id="respuesta" ><h3>aqui aparecera tu respuesta</h3></div>
+          </form> 
+          <div class="informacionb">
+            <p>Para transformar un número de base decimal a otra base, hay que hacer lo siguiente:
+                Se divide el número por esta base tantas veces como sea necesario hasta obtener un resto menor que la base; después, se anotan como numerales el último cociente y, en orden inverso, los sucesivos restos obtenidos.
+                Veamos ejemplos:
+            </p>
+            <h4> 1) Pasar el número 65 a código binario</h4>
+            <img src="https://rea.ceibal.edu.uy/elp/unidad-a-que-hora/cambio_base2.gif" alt="" width="200px" height="200px">
+            <h4>2) Convertir el número 65 a base 3</h4>
+            <img src="https://rea.ceibal.edu.uy/elp/unidad-a-que-hora/cambio_base3.gif" alt="" width="200px" height="200px">
+          </div>     
+    </main>
+    <script src="./main.js"></script>
+</body>
+</html>

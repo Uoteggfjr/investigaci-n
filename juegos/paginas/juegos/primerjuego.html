@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="estilojuegos.css">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+<body class="granja">
+    <a href="../pagina-niños.html" id="regresar"><span id="regresar" class="material-symbols-outlined">
+        undo <H5>REGRESAR</H5>
+        </span></a>
+    <header>
+        <h1>Ayudanos a recordar el nombre del siguiente animal...</h1>
+    </header>
+    <main class="contenedor">
+     <div id="imagenram"><div id="imagen" class="imagen"></div></div>
+     <div class="divinput"><input id="respuesta"  class="input" type="text" placeholder="INGRESA EL NOMBRE AQUI"></div>
+     <div class="divboton">
+     <button class="primerjuego" onclick="animalCorrecto('')"><h3>Verificar</h3></button>
+    </div>
+    </main>
+    <script src="juegos.js"></script>
+    <script>
+        imagenAleatoria();
+    </script>
+</body>
+</html>
